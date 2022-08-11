@@ -1,0 +1,5 @@
+<input type="file" style="display: none;" (change)="importFile($event)" #fileInput>
+<p>
+  {{this.file?.name || "No file imported yet."}}
+</p>
+<button mat-flat-button color="primary" (click)="fileInput.click()">Import file</button>
