@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ThemeService } from './theme.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'APMSystem';
+  constructor(private themeService: ThemeService) {
+  }
+  switchTheme(theme: string): void {
+    this.themeService.switchTheme(theme);
+  }
 }

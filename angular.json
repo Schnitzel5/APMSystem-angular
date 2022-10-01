@@ -106,5 +106,8 @@
       }
     }
   },
-  "defaultProject": "APMSystem"
+  "defaultProject": "APMSystem",
+  "cli": {
+    "analytics": false
+  }
 }

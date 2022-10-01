@@ -1,6 +1,6 @@
 <div>
   <mat-toolbar color="primary">
-    <button mat-icon-button aria-label="Example icon-button with menu icon" [matMenuTriggerFor]="menu">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>menu</mat-icon>
     </button>
     <span routerLink="/">{{title}}</span>
@@ -18,9 +18,16 @@
     <button mat-icon-button>
       <mat-icon>share</mat-icon>
     </button>
+    <span></span>
+    <button mat-button (click)="switchTheme('basil')">
+      <span>Basil</span>
+    </button>
+    <button mat-button (click)="switchTheme('shrine')">
+      <span>Shrine</span>
+    </button>
   </mat-toolbar>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="">
+    <button mat-menu-item routerLink="/">
       <mat-icon>home</mat-icon>
       <span>APMS</span>
     </button>
