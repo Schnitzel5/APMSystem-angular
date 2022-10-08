@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+const isSingleNumberRgx: RegExp = /\d/;
+const isNotSingleNumberRgx: RegExp = /\D/;
+const isNumberRgx: RegExp = /\d+/;
+const isNotNumberRgx: RegExp = /\D+/;
+
 @Component({
   selector: 'app-number-system',
   templateUrl: './number-system.component.html',
@@ -7,16 +12,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NumberSystemComponent implements OnInit {
 
-  private static readonly isSingleNumberRgx: RegExp =  /\d/;
-  private static readonly isNotSingleNumberRgx: RegExp =  /\D/;
-  private static readonly isNumberRgx: RegExp =  /\d+/;
-  private static readonly isNotNumberRgx: RegExp =  /\D+/;
   readonly numberSystems: number[] = [];
-  numberSystemSource: number = 0;
-  numberSystemTarget: number = 0;
-  source: string = '';
-  target: string = '';
-  value: string = '';
+  nsList: NS[] = [];
 
   constructor() { }
 
@@ -24,16 +21,34 @@ export class NumberSystemComponent implements OnInit {
     for (let i = 2; i <= 36; i++) {
       this.numberSystems.push(i);
     }
-    this.numberSystemSource = 10;
-    this.numberSystemTarget = 2;
+    this.addNS();
   }
+
+  addNS(): void {
+    this.nsList.push(new NS());
+  }
+
+  removeNS(ns: NS): void {
+    if (this.nsList.length < 2) {
+      return;
+    }
+    this.nsList = this.nsList.filter(ns1 => ns1 !== ns);
+  }
+
+}
+
+class NS {
+  numberSystemSource: number = 10;
+  numberSystemTarget: number = 2;
+  source: string = '';
+  target: string = '';
 
   recalculate(reverse: boolean): void {
     if (reverse) {
       this.source = this.convertToDecimal(this.target, this.numberSystemTarget).toString();
     } else {
       this.target = this.convertFromDecimal(
-        parseInt(this.source.replace(NumberSystemComponent.isNotNumberRgx, '')),
+        parseInt(this.source.replace(isNotNumberRgx, '')),
         this.numberSystemTarget
       );
       // this.target = parseInt(this.source).toString(this.numberSystemTarget); easier but not the purpose of this project
@@ -69,7 +84,7 @@ export class NumberSystemComponent implements OnInit {
     let result: number = 0;
     let temp: number[] = [];
     for (let n of origin) {
-      if (n.match(NumberSystemComponent.isSingleNumberRgx)) {
+      if (n.match(isSingleNumberRgx)) {
         temp.push(parseInt(n));
       } else if (n.charCodeAt(0) > 64 && n.charCodeAt(0) < 91) {
         temp.push(n.charCodeAt(0) - 65 + 10);
@@ -80,5 +95,4 @@ export class NumberSystemComponent implements OnInit {
     });
     return result;
   }
-
 }
